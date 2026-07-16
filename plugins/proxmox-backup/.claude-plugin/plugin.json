@@ -1,0 +1,29 @@
+{
+  "name": "proxmox-backup",
+  "version": "0.3.0",
+  "description": "Proxmox Backup Server (PBS) control for Claude Code — datastores, snapshots, GC, verify, prune, read-only by default.",
+  "author": {
+    "name": "ahmetem",
+    "url": "https://github.com/ahmetem"
+  },
+  "homepage": "https://github.com/ahmetem/homelab-pbs-mcp",
+  "repository": "https://github.com/ahmetem/homelab-pbs-mcp",
+  "license": "GPL-3.0-or-later",
+  "keywords": ["proxmox", "pbs", "backup", "homelab", "mcp"],
+  "mcpServers": {
+    "pbs": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "git+https://github.com/ahmetem/homelab-pbs-mcp.git",
+        "pbs-mcp"
+      ],
+      "env": {
+        "PBS_HOST": "${PBS_HOST}",
+        "PBS_TOKEN_ID": "${PBS_TOKEN_ID}",
+        "PBS_TOKEN_SECRET": "${PBS_TOKEN_SECRET}",
+        "PBS_NODE": "${PBS_NODE}"
+      }
+    }
+  }
+}

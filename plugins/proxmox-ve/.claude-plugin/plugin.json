@@ -1,0 +1,29 @@
+{
+  "name": "proxmox-ve",
+  "version": "1.2.0",
+  "description": "Proxmox VE control for Claude Code — 52 token-efficient, safety-gated tools over the PVE REST API + SSH.",
+  "author": {
+    "name": "ahmetem",
+    "url": "https://github.com/ahmetem"
+  },
+  "homepage": "https://github.com/ahmetem/homelab-proxmox-mcp",
+  "repository": "https://github.com/ahmetem/homelab-proxmox-mcp",
+  "license": "GPL-3.0-or-later",
+  "keywords": ["proxmox", "homelab", "virtualization", "zfs", "lxc", "mcp"],
+  "mcpServers": {
+    "proxmox": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "git+https://github.com/ahmetem/homelab-proxmox-mcp.git",
+        "proxmox-mcp"
+      ],
+      "env": {
+        "PROXMOX_HOST": "${PROXMOX_HOST}",
+        "PROXMOX_USER": "${PROXMOX_USER}",
+        "PROXMOX_TOKEN_NAME": "${PROXMOX_TOKEN_NAME}",
+        "PROXMOX_TOKEN_VALUE": "${PROXMOX_TOKEN_VALUE}"
+      }
+    }
+  }
+}

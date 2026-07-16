@@ -1,0 +1,25 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "proxmox-mcp-suite",
+  "description": "Token-efficient Proxmox VE + Proxmox Backup Server MCP servers for Claude Code — deep infrastructure control with safety-gated mutations, dry-run previews, and a tamper-evident audit log.",
+  "owner": {
+    "name": "ahmetem",
+    "url": "https://github.com/ahmetem"
+  },
+  "plugins": [
+    {
+      "name": "proxmox-ve",
+      "source": "./plugins/proxmox-ve",
+      "description": "Proxmox VE MCP server — 52 action-based tools: guest lifecycle (create/clone/power/resize), snapshots, backups, storage, disks/LVM/ZFS, guest/host/LXC exec, task forensics. Token-efficient output, confirm + data-loss gates, dry-run previews, hash-chained audit.",
+      "category": "infrastructure",
+      "keywords": ["proxmox", "homelab", "virtualization", "zfs", "lxc", "mcp"]
+    },
+    {
+      "name": "proxmox-backup",
+      "source": "./plugins/proxmox-backup",
+      "description": "Proxmox Backup Server (PBS) MCP server — datastores, snapshots, garbage collection, verify, and prune, read-only by default with an explicit write toggle.",
+      "category": "infrastructure",
+      "keywords": ["proxmox", "pbs", "backup", "homelab", "mcp"]
+    }
+  ]
+}
