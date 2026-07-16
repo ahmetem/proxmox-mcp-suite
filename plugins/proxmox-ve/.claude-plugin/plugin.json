@@ -16,7 +16,7 @@
       "args": [
         "--from",
         "git+https://github.com/ahmetem/homelab-proxmox-mcp.git",
-        "proxmox-mcp"
+        "pve-mcp"
       ],
       "env": {
         "PROXMOX_HOST": "${PROXMOX_HOST}",

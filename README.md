@@ -1,110 +1,152 @@
-# Proxmox MCP Suite — Claude Code plugins for Proxmox VE + PBS
+<h1 align="center">Proxmox MCP Suite</h1>
 
-Two token-efficient [MCP](https://modelcontextprotocol.io/) servers that let
-Claude Code (or any MCP client) run a **Proxmox VE** host and its **Proxmox
-Backup Server** through their REST APIs — installable as Claude Code plugins in
-a couple of commands.
+<p align="center">
+  <strong>Run your Proxmox VE cluster and Backup Server from Claude — deeply, safely, and without drowning the context window.</strong>
+</p>
 
-| Plugin | What it does |
-|---|---|
-| **`proxmox-ve`** | 52 action-based tools for Proxmox VE: guest lifecycle (create / clone / power / resize), snapshots, backups, storage, disks / LVM / ZFS, guest / host / LXC exec, task forensics. |
-| **`proxmox-backup`** | Proxmox Backup Server: datastores, snapshots, garbage collection, verify, prune — read-only by default. |
+<p align="center">
+  <img src="https://img.shields.io/badge/Claude%20Code-plugin-8A2BE2?logo=anthropic&logoColor=white" alt="Claude Code plugin">
+  <img src="https://img.shields.io/badge/MCP-compatible-FF6B35" alt="MCP compatible">
+  <img src="https://img.shields.io/badge/Proxmox-VE%20%2B%20PBS-E57000?logo=proxmox&logoColor=white" alt="Proxmox VE + PBS">
+  <img src="https://img.shields.io/badge/tools-69-2EA043" alt="69 tools">
+  <img src="https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white" alt="Python 3.11+">
+  <img src="https://img.shields.io/badge/license-GPL--3.0-0A7BBB" alt="GPL-3.0">
+</p>
 
-Both authenticate with **API tokens** (never a root password), gate every
-state-changing action behind `confirm=true` (and destructive ones behind
-`i_understand_data_loss=true`), and keep output compact so they sip context
-rather than flooding it.
+<p align="center">
+  <a href="#-quick-start">Quick start</a> ·
+  <a href="#-why-this-suite">Why this suite</a> ·
+  <a href="#-whats-inside">What's inside</a> ·
+  <a href="#-safety-model">Safety</a> ·
+  <a href="#-configuration">Config</a>
+</p>
 
-## Why these
+---
 
-Compared to other Proxmox MCP servers, this pair optimizes for **running inside
-an LLM's context**:
+Two [Model Context Protocol](https://modelcontextprotocol.io/) servers, packaged
+as Claude Code plugins, that turn Claude into a **capable Proxmox operator** —
+**69 tools** across virtualization and backup, engineered to run *inside an
+LLM's context*: compact output, one-call health, inline task results, and a
+two-tier safety model with dry-run previews and a **tamper-evident audit trail**.
 
-| | This suite | Typical Proxmox MCP |
-|---|---|---|
-| Output | Compact + length-capped JSON, one-call `health_overview`, list filters, `fields` projection | Verbose JSON dumps |
-| Task launches | `wait_seconds` polls the task and returns the result inline | Separate follow-up status call |
-| Safety | Two-tier `confirm` + `i_understand_data_loss`; `dry_run` previews on high-consequence mutations | Often single-flag or none |
-| Audit | Host/guest SSH exec appended to a **hash-chained, tamper-evident** log (`proxmox_audit_verify`) | Plain or no audit |
-| PVE depth | ZFS/LVM/disk-prepare/storage-provisioning/task-forensics/self-heal | VM/CT lifecycle only |
-
-> The two servers are intentionally separate plugins: install only Proxmox VE,
-> only PBS, or both.
-
-## Requirements
-
-- [Claude Code](https://claude.com/claude-code)
-- [`uv`](https://docs.astral.sh/uv/) (provides `uvx`) — the plugins run each MCP
-  server with `uvx`, which fetches and isolates it automatically. Install once:
-  ```bash
-  # macOS / Linux
-  curl -LsSf https://astral.sh/uv/install.sh | sh
-  # Windows (PowerShell)
-  powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
-  ```
-- A Proxmox VE host (and/or PBS) reachable over HTTPS, with an API token.
-
-## Install
-
+```mermaid
+flowchart LR
+    C["Claude Code"]
+    C -->|MCP| VE["proxmox-ve<br/>52 tools"]
+    C -->|MCP| PBS["proxmox-backup<br/>17 tools"]
+    VE -->|"REST API + SSH"| P1[("Proxmox VE")]
+    PBS -->|"REST API"| P2[("Proxmox Backup Server")]
 ```
+
+## ⚡ Quick start
+
+Prereq: [Claude Code](https://claude.com/claude-code) and [`uv`](https://docs.astral.sh/uv/) (`uvx`). The servers run via `uvx` — nothing to `pip install` by hand.
+
+```text
 /plugin marketplace add ahmetem/proxmox-mcp-suite
 /plugin install proxmox-ve@proxmox-mcp-suite
 /plugin install proxmox-backup@proxmox-mcp-suite
 ```
 
-Install just one if you only need one. Then set the environment variables (see
-below) and restart Claude Code.
+Export your Proxmox credentials (see [Configuration](#-configuration)), restart
+Claude Code, and ask:
 
-## Configure
+> *"How is the server? Any storage filling up?"* — one `proxmox_health_overview` call.
+>
+> *"Snapshot VM 102 as pre-upgrade, then reboot it."*
+>
+> *"Is my last backup of CT 200 healthy?"*
 
-The plugins pass configuration to the MCP servers via environment variables, so
-export them in the shell that launches Claude Code (no secret is stored in the
-plugin).
+## 🎯 Why this suite
 
-### Proxmox VE (`proxmox-ve`)
+Most Proxmox MCP servers wrap the API and hand Claude raw JSON. This one is
+built for the thing that actually constrains an agent — **context** — and for
+**not breaking your infrastructure**.
 
-Required:
-
-| Variable | Example | Notes |
+| | **Proxmox MCP Suite** | Typical Proxmox MCP |
 |---|---|---|
-| `PROXMOX_HOST` | `pve.example.com` | IP or hostname of the PVE host |
-| `PROXMOX_USER` | `root@pam` | User owning the API token |
-| `PROXMOX_TOKEN_NAME` | `mcp-server` | Token ID |
-| `PROXMOX_TOKEN_VALUE` | `xxxxxxxx-…` | Token secret (UUID) |
+| **Output** | Compact, length-capped JSON · one-call `health_overview` · list filters · `fields` projection | Verbose full-object dumps |
+| **Task launches** | `wait_seconds` polls the task and returns the **final result inline** | Fire, then a second call to check status |
+| **Mutations** | Two-tier gate: `confirm` **+** `i_understand_data_loss`, plus `dry_run` previews on the risky ones | Single flag, or nothing |
+| **Auditability** | Host/guest shell exec appended to a **hash-chained, tamper-evident** log (`proxmox_audit_verify`) | Plain log, or none |
+| **Depth (VE)** | Guests, snapshots, backups, storage, disks, **LVM, full ZFS, disk-prep, provisioning, task forensics, backup self-heal** | VM/CT lifecycle only |
+| **Backup (PBS)** | Dedicated server: datastores, snapshots, **GC, verify, prune**, read-only by default | Usually absent |
+| **Install** | One marketplace, `uvx` — zero manual Python setup | Clone + venv + pip + JSON config |
 
-Optional (export only to override defaults): `PROXMOX_PORT` (8006),
-`PROXMOX_VERIFY_SSL` (false), `PROXMOX_TIMEOUT` (30), and the SSH-backed
-tools' `PROXMOX_SSH_HOST` / `PROXMOX_SSH_USER` / `PROXMOX_SSH_KEY_PATH` /
-`PROXMOX_SSH_KNOWN_HOSTS`. See the
-[server repo](https://github.com/ahmetem/homelab-proxmox-mcp) for the full list.
+> Modular by design — install only Proxmox VE, only PBS, or both.
 
-### Proxmox Backup Server (`proxmox-backup`)
+## 📦 What's inside
 
-Required:
+### `proxmox-ve` — 52 tools
 
-| Variable | Example | Notes |
-|---|---|---|
-| `PBS_HOST` | `https://pbs.example.com:8007` | Full PBS REST URL |
-| `PBS_TOKEN_ID` | `root@pam!mcp` | API token id |
-| `PBS_TOKEN_SECRET` | `…` | Token secret (UUID) |
-| `PBS_NODE` | `pbs` | Node name as it appears in task UPIDs |
+<sub>Repo: [`homelab-proxmox-mcp`](https://github.com/ahmetem/homelab-proxmox-mcp)</sub>
 
-Optional: `PBS_VERIFY_TLS` (false), `PBS_DEFAULT_DATASTORE`,
-`PBS_HTTP_TIMEOUT` (30), and **`PBS_ALLOW_WRITE`** (false — the write-side
-tools like `run_gc`, `prune`, `forget_snapshot` refuse to run until this is
-`true`). See the [PBS server repo](https://github.com/ahmetem/homelab-pbs-mcp).
+- **Guests** — list/status, create VM & LXC from scratch, clone, power, resize
+- **Snapshots** — create / rollback / delete (data-loss gated)
+- **Backups** — vzdump create / list / restore (refuses silent overwrite)
+- **Storage & disks** — pools, usage breakdown, physical disks + SMART
+- **LVM / ZFS** — VG/thin, full ZFS: pools, datasets, snapshots, scrub, send, properties, disk-prepare & provisioning
+- **Exec** — guest-VM SSH, host SSH (free + a read-only allow-listed variant safe for agents), LXC `pct exec`, service control, log tail
+- **Forensics & self-heal** — task list/logs, backup-job inspection, stale `@vzdump` snapshot cleanup that unblocks failing backups
 
-## Notes
+### `proxmox-backup` — 17 tools
 
-- **Source:** the plugins run the servers straight from their Git repos via
-  `uvx --from git+https://…`. If you'd rather use PyPI, publish the packages
-  (`proxmox-mcp`, `pbs-mcp`) and change each plugin's `args` to just the
-  package name (e.g. `["proxmox-mcp"]`).
-- **Verify a server appears:** run `/mcp` after installing.
-- **Security:** keep the Proxmox / PBS APIs on a trusted LAN or behind a VPN;
-  privilege-separate the API tokens.
+<sub>Repo: [`homelab-pbs-mcp`](https://github.com/ahmetem/homelab-pbs-mcp)</sub>
 
-## License
+- **Datastores & snapshots** — status, usage, list, protect/forget
+- **Maintenance** — garbage collection, verify jobs, prune (with dry-run)
+- **Tasks** — status and logs by UPID
+- **Read-only by default** — write-side tools stay inert until `PBS_ALLOW_WRITE=true`
 
-The MCP servers are GPL-3.0-or-later (see each server repo). This marketplace
-metadata is provided under the same terms.
+## 🛡️ Safety model
+
+Read-only tools run freely. Everything that changes state requires `confirm=true`;
+anything that destroys persistent data *additionally* requires
+`i_understand_data_loss=true` — so Claude only fires these after you clearly ask.
+
+- **`dry_run` previews** on the highest-consequence mutations (create VM/CT,
+  clone, restore) return the exact API call they *would* make (secrets masked),
+  without touching anything.
+- **Tamper-evident audit** — every host/guest shell exec is appended to a
+  hash-chained log (SHA-256, or HMAC-SHA256 with `PROXMOX_AUDIT_HMAC_KEY`).
+  `proxmox_audit_verify` recomputes the chain and flags any altered, deleted,
+  or reordered line.
+- **Token auth, never root passwords** — API tokens are revocable and scope the
+  blast radius.
+
+## ⚙️ Configuration
+
+Credentials are passed to the servers via environment variables — export them in
+the shell that launches Claude Code (no secret is stored in the plugin).
+
+**Proxmox VE** — required: `PROXMOX_HOST`, `PROXMOX_USER`, `PROXMOX_TOKEN_NAME`,
+`PROXMOX_TOKEN_VALUE`. Optional: `PROXMOX_PORT`, `PROXMOX_VERIFY_SSL`, and the
+SSH-backed tools' `PROXMOX_SSH_*`. → full list in the
+[server repo](https://github.com/ahmetem/homelab-proxmox-mcp).
+
+**Proxmox Backup Server** — required: `PBS_HOST`, `PBS_TOKEN_ID`,
+`PBS_TOKEN_SECRET`, `PBS_NODE`. Optional: `PBS_VERIFY_TLS`,
+`PBS_DEFAULT_DATASTORE`, and **`PBS_ALLOW_WRITE`** (gates GC/prune/forget). →
+[PBS server repo](https://github.com/ahmetem/homelab-pbs-mcp).
+
+Verify servers loaded with `/mcp`.
+
+## 🔧 How it runs
+
+Each plugin launches its server with `uvx`, which fetches and isolates it
+automatically. By default it builds straight from the Git repos
+(`uvx --from git+https://…`). Once the packages are on PyPI you can switch each
+plugin's `args` to the bare package name (`pve-mcp`, `pbs-mcp`) for faster,
+pinned installs.
+
+## 🔒 Security notes
+
+- Keep the Proxmox / PBS APIs on a trusted LAN or behind a VPN.
+- Privilege-separate the API tokens; grant the narrowest role that works.
+- Don't remove the `confirm` / `i_understand_data_loss` guards.
+
+## 📄 License
+
+[GNU General Public License v3.0](https://github.com/ahmetem/homelab-proxmox-mcp/blob/main/LICENSE).
+Not affiliated with or endorsed by Proxmox Server Solutions GmbH. "Proxmox" is a
+trademark of its respective owner.
