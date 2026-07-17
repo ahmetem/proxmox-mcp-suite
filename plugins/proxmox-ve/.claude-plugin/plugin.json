@@ -1,6 +1,6 @@
 {
   "name": "proxmox-ve",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Proxmox VE control for Claude Code — 52 token-efficient, safety-gated tools over the PVE REST API + SSH.",
   "author": {
     "name": "ahmetem",
