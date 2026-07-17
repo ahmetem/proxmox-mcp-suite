@@ -1,0 +1,68 @@
+<svg viewBox='0 0 880 596' xmlns='http://www.w3.org/2000/svg' role='img' width='100%'>
+<title>Capability comparison: Proxmox MCP Suite versus a typical Proxmox MCP</title>
+<desc>A feature table. Both a typical Proxmox MCP and the Suite cover guest creation, snapshots, backup, restore and storage inspection. Only the Suite adds full ZFS, LVM, disk SMART, host shell exec, Proxmox Backup Server, token-efficiency, dry-run previews and a tamper-evident audit.</desc>
+<style>
+text{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;}
+.ttl{font-size:23px;font-weight:700;fill:#e6edf3;}
+.sub{font-size:13px;fill:#8b949e;}
+.ft{font-size:14px;fill:#c9d1d9;}
+.ch{font-size:12.5px;font-weight:700;}
+.suite{fill:#a371f7;}
+.plus{fill:#8b949e;}
+.foot{font-size:12px;fill:#8b949e;}
+</style>
+<rect x='1' y='1' width='878' height='594' rx='14' fill='#0d1117' stroke='#30363d'/>
+<text class='ttl' x='36' y='46'>Capability comparison</text>
+<text class='sub' x='36' y='70'>Proxmox MCP Suite vs a typical Proxmox MCP server</text>
+<line x1='36' y1='86' x2='844' y2='86' stroke='#21262d'/>
+<text class='ch suite' x='620' y='106' text-anchor='middle'>Proxmox MCP</text>
+<text class='ch suite' x='620' y='121' text-anchor='middle'>Suite</text>
+<text class='ch plus' x='770' y='106' text-anchor='middle'>Typical</text>
+<text class='ch plus' x='770' y='121' text-anchor='middle'>MCP</text>
+<line x1='36' y1='128' x2='844' y2='128' stroke='#21262d'/>
+<rect x='14' y='128' width='852' height='36' fill='#161b22'/>
+<rect x='14' y='200' width='852' height='36' fill='#161b22'/>
+<rect x='14' y='272' width='852' height='36' fill='#161b22'/>
+<rect x='14' y='344' width='852' height='36' fill='#161b22'/>
+<rect x='14' y='416' width='852' height='36' fill='#161b22'/>
+<rect x='14' y='488' width='852' height='36' fill='#161b22'/>
+<text class='ft' x='36' y='151'>Guest creation — VM &amp; LXC</text>
+<circle cx='620' cy='146' r='10' fill='#238636'/><path transform='translate(620,146)' d='M-4 0.5 l3 3 l7 -7.5' fill='none' stroke='#ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/>
+<circle cx='770' cy='146' r='10' fill='#238636'/><path transform='translate(770,146)' d='M-4 0.5 l3 3 l7 -7.5' fill='none' stroke='#ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/>
+<text class='ft' x='36' y='187'>Snapshots · backup · restore</text>
+<circle cx='620' cy='182' r='10' fill='#238636'/><path transform='translate(620,182)' d='M-4 0.5 l3 3 l7 -7.5' fill='none' stroke='#ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/>
+<circle cx='770' cy='182' r='10' fill='#238636'/><path transform='translate(770,182)' d='M-4 0.5 l3 3 l7 -7.5' fill='none' stroke='#ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/>
+<text class='ft' x='36' y='223'>Storage &amp; cluster inspection</text>
+<circle cx='620' cy='218' r='10' fill='#238636'/><path transform='translate(620,218)' d='M-4 0.5 l3 3 l7 -7.5' fill='none' stroke='#ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/>
+<circle cx='770' cy='218' r='10' fill='#238636'/><path transform='translate(770,218)' d='M-4 0.5 l3 3 l7 -7.5' fill='none' stroke='#ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/>
+<text class='ft' x='36' y='259'>Full ZFS — pools, datasets, scrub, send</text>
+<circle cx='620' cy='254' r='10' fill='#238636'/><path transform='translate(620,254)' d='M-4 0.5 l3 3 l7 -7.5' fill='none' stroke='#ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/>
+<circle cx='770' cy='254' r='9.5' fill='none' stroke='#484f58' stroke-width='1.5'/>
+<text class='ft' x='36' y='295'>LVM management — VG &amp; thin pools</text>
+<circle cx='620' cy='290' r='10' fill='#238636'/><path transform='translate(620,290)' d='M-4 0.5 l3 3 l7 -7.5' fill='none' stroke='#ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/>
+<circle cx='770' cy='290' r='9.5' fill='none' stroke='#484f58' stroke-width='1.5'/>
+<text class='ft' x='36' y='331'>Physical disks + SMART health</text>
+<circle cx='620' cy='326' r='10' fill='#238636'/><path transform='translate(620,326)' d='M-4 0.5 l3 3 l7 -7.5' fill='none' stroke='#ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/>
+<circle cx='770' cy='326' r='9.5' fill='none' stroke='#484f58' stroke-width='1.5'/>
+<text class='ft' x='36' y='367'>Host shell exec — full + read-only allow-list</text>
+<circle cx='620' cy='362' r='10' fill='#238636'/><path transform='translate(620,362)' d='M-4 0.5 l3 3 l7 -7.5' fill='none' stroke='#ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/>
+<circle cx='770' cy='362' r='9.5' fill='none' stroke='#484f58' stroke-width='1.5'/>
+<text class='ft' x='36' y='403'>Proxmox Backup Server — GC, verify, prune</text>
+<circle cx='620' cy='398' r='10' fill='#238636'/><path transform='translate(620,398)' d='M-4 0.5 l3 3 l7 -7.5' fill='none' stroke='#ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/>
+<circle cx='770' cy='398' r='9.5' fill='none' stroke='#484f58' stroke-width='1.5'/>
+<text class='ft' x='36' y='439'>Token-efficiency — 1-call health, compact, fields[]</text>
+<circle cx='620' cy='434' r='10' fill='#238636'/><path transform='translate(620,434)' d='M-4 0.5 l3 3 l7 -7.5' fill='none' stroke='#ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/>
+<circle cx='770' cy='434' r='9.5' fill='none' stroke='#484f58' stroke-width='1.5'/>
+<text class='ft' x='36' y='475'>dry-run previews on risky mutations</text>
+<circle cx='620' cy='470' r='10' fill='#238636'/><path transform='translate(620,470)' d='M-4 0.5 l3 3 l7 -7.5' fill='none' stroke='#ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/>
+<circle cx='770' cy='470' r='9.5' fill='none' stroke='#484f58' stroke-width='1.5'/>
+<text class='ft' x='36' y='511'>Tamper-evident audit — hash-chained log</text>
+<circle cx='620' cy='506' r='10' fill='#238636'/><path transform='translate(620,506)' d='M-4 0.5 l3 3 l7 -7.5' fill='none' stroke='#ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/>
+<circle cx='770' cy='506' r='9.5' fill='none' stroke='#484f58' stroke-width='1.5'/>
+<circle cx='44' cy='548' r='7' fill='#238636'/><path transform='translate(44,548)' d='M-3 0.4 l2.2 2.2 l5 -5.4' fill='none' stroke='#ffffff' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/>
+<text class='foot' x='57' y='552'>available</text>
+<circle cx='150' cy='548' r='6.5' fill='none' stroke='#484f58' stroke-width='1.5'/>
+<text class='foot' x='163' y='552'>not available</text>
+<text class='foot' x='36' y='572'>“Typical MCP” = the usual API-wrapping servers, offering VM and container lifecycle only.</text>
+<text class='foot' x='36' y='590'>Honesty: some (e.g. ProxmoxMCP-Plus) add HTTP/OpenAPI access and a job store the Suite lacks.</text>
+</svg>

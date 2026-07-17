@@ -13,11 +13,7 @@
   "mcpServers": {
     "pbs": {
       "command": "uvx",
-      "args": [
-        "--from",
-        "git+https://github.com/ahmetem/homelab-pbs-mcp.git",
-        "pbs-mcp"
-      ],
+      "args": ["pbs-mcp"],
       "env": {
         "PBS_HOST": "${PBS_HOST}",
         "PBS_TOKEN_ID": "${PBS_TOKEN_ID}",

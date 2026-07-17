@@ -1,0 +1,44 @@
+<svg viewBox='0 0 880 392' xmlns='http://www.w3.org/2000/svg' role='img' width='100%'>
+<title>Token efficiency: the same operation costs fewer round-trips and smaller payloads</title>
+<desc>Answering how is the server takes six calls with a typical MCP but one health_overview call with the Suite. Launching a task takes fire then repeated polling with a typical MCP, but one fire with wait_seconds returns the result inline with the Suite. The Suite also uses compact length-capped JSON, field projection and list filters.</desc>
+<style>
+text{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;}
+.ttl{font-size:23px;font-weight:700;fill:#e6edf3;}
+.sub{font-size:13px;fill:#8b949e;}
+.sec{font-size:13px;font-weight:600;fill:#c9d1d9;}
+.sm{font-size:12.5px;}
+.chip{font-size:11.5px;font-weight:600;}
+.pill{font-size:12px;fill:#c9d1d9;}
+.foot{font-size:12px;fill:#8b949e;}
+</style>
+<rect x='1' y='1' width='878' height='390' rx='14' fill='#0d1117' stroke='#30363d'/>
+<text class='ttl' x='36' y='46'>Engineered for the context window</text>
+<text class='sub' x='36' y='70'>The same operation costs fewer round-trips and smaller payloads</text>
+<text class='sec' x='36' y='104'>Answering “how is the server?”</text>
+<text class='sm' x='36' y='131' fill='#8b949e'>Typical MCP</text>
+<rect x='150' y='121' width='70' height='16' rx='3' fill='#9e6a00'/>
+<rect x='226' y='121' width='70' height='16' rx='3' fill='#9e6a00'/>
+<rect x='302' y='121' width='70' height='16' rx='3' fill='#9e6a00'/>
+<rect x='378' y='121' width='70' height='16' rx='3' fill='#9e6a00'/>
+<rect x='454' y='121' width='70' height='16' rx='3' fill='#9e6a00'/>
+<rect x='530' y='121' width='70' height='16' rx='3' fill='#9e6a00'/>
+<text class='sm' x='614' y='133' fill='#c9d1d9'>6 calls, full JSON each</text>
+<text class='sm' x='36' y='167' fill='#a371f7' font-weight='600'>Proxmox MCP Suite</text>
+<rect x='150' y='157' width='70' height='16' rx='3' fill='#2ea043'/>
+<text class='sm' x='232' y='169' fill='#c9d1d9'>1 call · proxmox_health_overview (4 fetches, concurrent)</text>
+<text class='sec' x='36' y='212'>Launching a task</text>
+<text class='sm' x='36' y='242' fill='#8b949e'>Typical MCP</text>
+<rect x='150' y='228' width='60' height='20' rx='10' fill='#2a2413' stroke='#9e6a00'/><text class='chip' x='180' y='242' fill='#d0a215' text-anchor='middle'>fire</text>
+<rect x='220' y='228' width='60' height='20' rx='10' fill='#2a2413' stroke='#9e6a00'/><text class='chip' x='250' y='242' fill='#d0a215' text-anchor='middle'>poll</text>
+<rect x='290' y='228' width='60' height='20' rx='10' fill='#2a2413' stroke='#9e6a00'/><text class='chip' x='320' y='242' fill='#d0a215' text-anchor='middle'>poll</text>
+<rect x='360' y='228' width='60' height='20' rx='10' fill='#2a2413' stroke='#9e6a00'/><text class='chip' x='390' y='242' fill='#d0a215' text-anchor='middle'>poll</text>
+<text class='sm' x='436' y='242' fill='#c9d1d9'>4 exchanges</text>
+<text class='sm' x='36' y='278' fill='#a371f7' font-weight='600'>Proxmox MCP Suite</text>
+<rect x='150' y='264' width='168' height='20' rx='10' fill='#122019' stroke='#2ea043'/><text class='chip' x='234' y='278' fill='#3fb950' text-anchor='middle'>fire + wait_seconds</text>
+<text class='sm' x='326' y='278' fill='#8b949e'>→</text>
+<rect x='344' y='264' width='128' height='20' rx='10' fill='#122019' stroke='#2ea043'/><text class='chip' x='408' y='278' fill='#3fb950' text-anchor='middle'>result inline ✓</text>
+<rect x='36' y='312' width='214' height='24' rx='12' fill='#161b22' stroke='#30363d'/><text class='pill' x='143' y='328' text-anchor='middle'>compact, length-capped JSON</text>
+<rect x='260' y='312' width='150' height='24' rx='12' fill='#161b22' stroke='#30363d'/><text class='pill' x='335' y='328' text-anchor='middle'>fields[] projection</text>
+<rect x='420' y='312' width='158' height='24' rx='12' fill='#161b22' stroke='#30363d'/><text class='pill' x='499' y='328' text-anchor='middle'>list filters + limits</text>
+<text class='foot' x='36' y='368'>Fewer calls and smaller payloads leave more of the context window for the model to reason.</text>
+</svg>

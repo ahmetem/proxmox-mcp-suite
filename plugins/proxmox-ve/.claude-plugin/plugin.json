@@ -13,11 +13,7 @@
   "mcpServers": {
     "proxmox": {
       "command": "uvx",
-      "args": [
-        "--from",
-        "git+https://github.com/ahmetem/homelab-proxmox-mcp.git",
-        "pve-mcp"
-      ],
+      "args": ["pve-mcp"],
       "env": {
         "PROXMOX_HOST": "${PROXMOX_HOST}",
         "PROXMOX_USER": "${PROXMOX_USER}",

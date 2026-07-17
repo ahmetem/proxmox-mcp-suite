@@ -7,6 +7,8 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Claude%20Code-plugin-8A2BE2?logo=anthropic&logoColor=white" alt="Claude Code plugin">
   <img src="https://img.shields.io/badge/MCP-compatible-FF6B35" alt="MCP compatible">
+  <a href="https://pypi.org/project/pve-mcp/"><img src="https://img.shields.io/pypi/v/pve-mcp?label=pve-mcp&logo=pypi&logoColor=white&color=3775A9" alt="pve-mcp on PyPI"></a>
+  <a href="https://pypi.org/project/pbs-mcp/"><img src="https://img.shields.io/pypi/v/pbs-mcp?label=pbs-mcp&logo=pypi&logoColor=white&color=3775A9" alt="pbs-mcp on PyPI"></a>
   <img src="https://img.shields.io/badge/Proxmox-VE%20%2B%20PBS-E57000?logo=proxmox&logoColor=white" alt="Proxmox VE + PBS">
   <img src="https://img.shields.io/badge/tools-69-2EA043" alt="69 tools">
   <img src="https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white" alt="Python 3.11+">
@@ -29,14 +31,9 @@ as Claude Code plugins, that turn Claude into a **capable Proxmox operator** —
 LLM's context*: compact output, one-call health, inline task results, and a
 two-tier safety model with dry-run previews and a **tamper-evident audit trail**.
 
-```mermaid
-flowchart LR
-    C["Claude Code"]
-    C -->|MCP| VE["proxmox-ve<br/>52 tools"]
-    C -->|MCP| PBS["proxmox-backup<br/>17 tools"]
-    VE -->|"REST API + SSH"| P1[("Proxmox VE")]
-    PBS -->|"REST API"| P2[("Proxmox Backup Server")]
-```
+<p align="center">
+  <img src="assets/architecture.svg" alt="Proxmox MCP Suite architecture — MCP clients reach two servers (proxmox-ve, proxmox-backup) behind a safety layer that drive Proxmox VE and Backup Server" width="100%">
+</p>
 
 ## ⚡ Quick start
 
@@ -63,6 +60,10 @@ Most Proxmox MCP servers wrap the API and hand Claude raw JSON. This one is
 built for the thing that actually constrains an agent — **context** — and for
 **not breaking your infrastructure**.
 
+<p align="center">
+  <img src="assets/token-efficiency.svg" alt="Token efficiency — the same operation costs fewer round-trips and smaller payloads" width="100%">
+</p>
+
 | | **Proxmox MCP Suite** | Typical Proxmox MCP |
 |---|---|---|
 | **Output** | Compact, length-capped JSON · one-call `health_overview` · list filters · `fields` projection | Verbose full-object dumps |
@@ -76,6 +77,10 @@ built for the thing that actually constrains an agent — **context** — and fo
 > Modular by design — install only Proxmox VE, only PBS, or both.
 
 ## 📦 What's inside
+
+<p align="center">
+  <img src="assets/capability-matrix.svg" alt="Capability comparison — Proxmox MCP Suite versus a typical Proxmox MCP server" width="100%">
+</p>
 
 ### `proxmox-ve` — 52 tools
 
@@ -133,11 +138,12 @@ Verify servers loaded with `/mcp`.
 
 ## 🔧 How it runs
 
-Each plugin launches its server with `uvx`, which fetches and isolates it
-automatically. By default it builds straight from the Git repos
-(`uvx --from git+https://…`). Once the packages are on PyPI you can switch each
-plugin's `args` to the bare package name (`pve-mcp`, `pbs-mcp`) for faster,
-pinned installs.
+Each plugin launches its server with `uvx`, which fetches, installs and isolates
+it automatically from PyPI ([`pve-mcp`](https://pypi.org/project/pve-mcp/),
+[`pbs-mcp`](https://pypi.org/project/pbs-mcp/)) — no clone, no virtualenv, no
+manual `pip install`. `uvx` caches the environment after the first launch, so
+later starts are instant. To pin a specific release, set a plugin's `args` to
+e.g. `["pve-mcp==1.2.0"]`.
 
 ## 🔒 Security notes
 

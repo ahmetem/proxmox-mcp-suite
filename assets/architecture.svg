@@ -1,0 +1,104 @@
+<svg viewBox='0 0 1200 660' xmlns='http://www.w3.org/2000/svg' role='img' aria-labelledby='t d'>
+<title id='t'>Proxmox MCP Suite architecture</title>
+<desc id='d'>MCP clients reach the proxmox-mcp-suite marketplace over stdio. It holds two servers — proxmox-ve (52 tools) and proxmox-backup (17 tools) — behind a safety layer, driving Proxmox VE over REST and SSH and Proxmox Backup Server over REST.</desc>
+<defs>
+<filter id='sh' x='-20%' y='-20%' width='140%' height='150%'><feDropShadow dx='0' dy='6' stdDeviation='8' flood-color='#000000' flood-opacity='0.5'/></filter>
+<marker id='arA' markerWidth='14' markerHeight='14' refX='11' refY='7' orient='auto' markerUnits='userSpaceOnUse'><path d='M2 2 L12 7 L2 12 Z' fill='#2dd4bf'/></marker>
+<marker id='arC' markerWidth='14' markerHeight='14' refX='11' refY='7' orient='auto' markerUnits='userSpaceOnUse'><path d='M2 2 L12 7 L2 12 Z' fill='#f0883e'/></marker>
+<style>
+text{font-family:'Segoe UI',-apple-system,Arial,sans-serif;}
+.fig{font-size:13px;font-weight:600;fill:#6e7681;letter-spacing:.12em;}
+.ttl{font-size:30px;font-weight:700;fill:#e6edf3;}
+.sub{font-size:15px;fill:#8b949e;}
+.pt{font-size:21px;font-weight:700;fill:#e6edf3;}
+.sl{font-size:12px;font-weight:600;fill:#6e7681;letter-spacing:.1em;}
+.cardt{font-size:18px;font-weight:700;fill:#e6edf3;}
+.cardt2{font-size:15px;font-weight:700;fill:#e6edf3;}
+.body{font-size:14px;fill:#9aa7b4;}
+.mono{font-size:14px;font-weight:700;font-family:Consolas,'Courier New',monospace;fill:#c9d1d9;}
+.cnt{font-size:15px;font-weight:700;}
+.cp{font-size:11px;font-weight:600;fill:#adbac7;}
+.inv{fill:#ffffff;}
+.pl{font-size:20px;font-weight:700;fill:#ffffff;}
+.flab{font-size:14px;fill:#c9d1d9;}
+.gl{font-size:11px;font-weight:600;fill:#8b949e;letter-spacing:.05em;}
+</style>
+</defs>
+<rect x='2' y='2' width='1196' height='656' rx='16' fill='#0d1117' stroke='#30363d'/>
+<text class='fig' x='44' y='44'>FIGURE 1 · ARCHITECTURE</text>
+<text class='ttl' x='44' y='86'>Proxmox MCP Suite architecture</text>
+<rect x='44' y='96' width='62' height='4' rx='2' fill='#a371f7'/>
+<text class='sub' x='44' y='122'>Two MCP servers under one marketplace, driving Proxmox VE and Backup Server behind a safety layer.</text>
+<rect x='44' y='150' width='244' height='330' rx='24' fill='#0f1719' stroke='#21403f' stroke-width='2'/>
+<circle cx='78' cy='188' r='19' fill='#2dd4bf'/><text class='pl' x='78' y='195' text-anchor='middle'>A</text>
+<text class='pt' x='108' y='184'>Clients</text>
+<text class='sl' x='108' y='208'>REQUEST SURFACE</text>
+<rect x='64' y='230' width='200' height='128' rx='16' fill='#161b22' stroke='#2f3945' stroke-width='2' filter='url(#sh)'/>
+<text class='cardt' x='88' y='264'>MCP · stdio</text>
+<text class='body' x='88' y='290'>local process transport</text>
+<text class='body' x='88' y='314'>Claude Code · Cursor</text>
+<text class='body' x='88' y='336'>VS Code · Codex · more</text>
+<text class='body' x='64' y='400'>One transport surface: stdio.</text>
+<text class='sub' x='64' y='424'>(no HTTP / OpenAPI bridge)</text>
+<rect x='320' y='150' width='568' height='400' rx='26' fill='#14111c' stroke='#362c4c' stroke-width='2'/>
+<circle cx='354' cy='188' r='19' fill='#a371f7'/><text class='pl' x='354' y='195' text-anchor='middle'>B</text>
+<text class='pt' x='384' y='184'>proxmox-mcp-suite</text>
+<text class='sl' x='384' y='208'>MCP SERVERS · TOOLS · SAFETY</text>
+<text class='gl' x='864' y='184' text-anchor='end'>uvx · PyPI</text>
+<rect x='340' y='226' width='528' height='120' rx='16' fill='#161b22' stroke='#2f3945' stroke-width='2' filter='url(#sh)'/>
+<rect x='360' y='243' width='18' height='3.4' rx='1.5' fill='#f0883e'/><rect x='360' y='249' width='18' height='3.4' rx='1.5' fill='#f0883e'/><rect x='360' y='255' width='18' height='3.4' rx='1.5' fill='#f0883e'/>
+<text class='cardt' x='388' y='262'>proxmox-ve</text>
+<text class='cnt' x='848' y='262' text-anchor='end' fill='#f0883e'>52 tools</text>
+<rect x='360' y='278' width='54' height='26' rx='13' fill='#232c37' stroke='#323c48'/><text class='cp' x='387' y='295' text-anchor='middle'>Guests</text>
+<rect x='422' y='278' width='76' height='26' rx='13' fill='#232c37' stroke='#323c48'/><text class='cp' x='460' y='295' text-anchor='middle'>Snapshots</text>
+<rect x='506' y='278' width='64' height='26' rx='13' fill='#232c37' stroke='#323c48'/><text class='cp' x='538' y='295' text-anchor='middle'>Backups</text>
+<rect x='578' y='278' width='62' height='26' rx='13' fill='#232c37' stroke='#323c48'/><text class='cp' x='609' y='295' text-anchor='middle'>Storage</text>
+<rect x='648' y='278' width='52' height='26' rx='13' fill='#232c37' stroke='#323c48'/><text class='cp' x='674' y='295' text-anchor='middle'>Disks</text>
+<rect x='360' y='310' width='42' height='26' rx='13' fill='#232c37' stroke='#323c48'/><text class='cp' x='381' y='327' text-anchor='middle'>LVM</text>
+<rect x='410' y='310' width='42' height='26' rx='13' fill='#232c37' stroke='#323c48'/><text class='cp' x='431' y='327' text-anchor='middle'>ZFS</text>
+<rect x='460' y='310' width='46' height='26' rx='13' fill='#232c37' stroke='#323c48'/><text class='cp' x='483' y='327' text-anchor='middle'>Exec</text>
+<rect x='514' y='310' width='76' height='26' rx='13' fill='#232c37' stroke='#323c48'/><text class='cp' x='552' y='327' text-anchor='middle'>Forensics</text>
+<rect x='340' y='362' width='528' height='96' rx='16' fill='#161b22' stroke='#2f3945' stroke-width='2' filter='url(#sh)'/>
+<rect x='360' y='379' width='18' height='3.4' rx='1.5' fill='#58a6ff'/><rect x='360' y='385' width='18' height='3.4' rx='1.5' fill='#58a6ff'/><rect x='360' y='391' width='18' height='3.4' rx='1.5' fill='#58a6ff'/>
+<text class='cardt' x='388' y='398'>proxmox-backup</text>
+<text class='cnt' x='848' y='398' text-anchor='end' fill='#58a6ff'>17 tools</text>
+<rect x='360' y='414' width='82' height='26' rx='13' fill='#232c37' stroke='#323c48'/><text class='cp' x='401' y='431' text-anchor='middle'>Datastores</text>
+<rect x='452' y='414' width='76' height='26' rx='13' fill='#232c37' stroke='#323c48'/><text class='cp' x='490' y='431' text-anchor='middle'>Snapshots</text>
+<rect x='538' y='414' width='38' height='26' rx='13' fill='#232c37' stroke='#323c48'/><text class='cp' x='557' y='431' text-anchor='middle'>GC</text>
+<rect x='584' y='414' width='56' height='26' rx='13' fill='#232c37' stroke='#323c48'/><text class='cp' x='612' y='431' text-anchor='middle'>Verify</text>
+<rect x='648' y='414' width='54' height='26' rx='13' fill='#232c37' stroke='#323c48'/><text class='cp' x='675' y='431' text-anchor='middle'>Prune</text>
+<rect x='710' y='414' width='54' height='26' rx='13' fill='#232c37' stroke='#323c48'/><text class='cp' x='737' y='431' text-anchor='middle'>Tasks</text>
+<rect x='340' y='474' width='528' height='56' rx='16' fill='#12211a' stroke='#3fb950' stroke-width='1.5'/>
+<path d='M0 -11 l11 3.5 v6.5 c0 6 -4.6 9.4 -11 11.8 c-6.4 -2.4 -11 -5.8 -11 -11.8 v-6.5 z' transform='translate(366,502)' fill='none' stroke='#3fb950' stroke-width='1.5'/>
+<text class='cardt2' x='392' y='497'>Safety layer</text>
+<text class='body' x='392' y='519'>confirm + i_understand_data_loss · dry-run · tamper-evident hash-chain audit</text>
+<rect x='912' y='150' width='244' height='330' rx='24' fill='#1a1410' stroke='#3d2e1f' stroke-width='2'/>
+<circle cx='946' cy='188' r='19' fill='#f0883e'/><text class='pl' x='946' y='195' text-anchor='middle'>C</text>
+<text class='pt' x='976' y='184'>Proxmox</text>
+<text class='sl' x='976' y='208'>EXECUTION TARGETS</text>
+<rect x='932' y='230' width='204' height='116' rx='16' fill='#161b22' stroke='#2f3945' stroke-width='2' filter='url(#sh)'/>
+<text class='cardt' x='956' y='262'>Proxmox VE</text>
+<text class='mono' x='956' y='288'>REST API + SSH</text>
+<text class='body' x='956' y='312'>cluster · node · VM · LXC</text>
+<text class='body' x='956' y='334'>storage · ZFS pools</text>
+<rect x='932' y='362' width='204' height='108' rx='16' fill='#161b22' stroke='#2f3945' stroke-width='2' filter='url(#sh)'/>
+<text class='cardt2' x='956' y='392'>Proxmox Backup Server</text>
+<text class='mono' x='956' y='418'>REST API</text>
+<text class='body' x='956' y='442'>datastores · GC · verify</text>
+<line x1='290' y1='300' x2='316' y2='300' stroke='#2dd4bf' stroke-width='3.5' marker-end='url(#arA)'/>
+<text class='gl' x='303' y='292' text-anchor='middle'>stdio</text>
+<line x1='890' y1='300' x2='908' y2='300' stroke='#f0883e' stroke-width='3.5' marker-end='url(#arC)'/>
+<text class='gl' x='900' y='292' text-anchor='middle'>REST</text>
+<rect x='44' y='560' width='1112' height='72' rx='36' fill='#12181f' stroke='#2a323c' stroke-width='2' filter='url(#sh)'/>
+<circle cx='90' cy='596' r='15' fill='#2dd4bf'/><text class='inv' x='90' y='601' text-anchor='middle' font-size='15' font-weight='700'>1</text>
+<text class='flab' x='114' y='601'>Intent</text>
+<line x1='176' y1='596' x2='270' y2='596' stroke='#4a5560' stroke-width='2' stroke-dasharray='6 7'/>
+<circle cx='300' cy='596' r='15' fill='#a371f7'/><text class='inv' x='300' y='601' text-anchor='middle' font-size='15' font-weight='700'>2</text>
+<text class='flab' x='324' y='601'>Route + safety gate</text>
+<line x1='500' y1='596' x2='590' y2='596' stroke='#4a5560' stroke-width='2' stroke-dasharray='6 7'/>
+<circle cx='620' cy='596' r='15' fill='#f0883e'/><text class='inv' x='620' y='601' text-anchor='middle' font-size='15' font-weight='700'>3</text>
+<text class='flab' x='644' y='601'>Execute (REST / SSH)</text>
+<line x1='860' y1='596' x2='950' y2='596' stroke='#4a5560' stroke-width='2' stroke-dasharray='6 7'/>
+<circle cx='980' cy='596' r='15' fill='#3fb950'/><text class='inv' x='980' y='601' text-anchor='middle' font-size='15' font-weight='700'>4</text>
+<text class='flab' x='1004' y='601'>Result + inline task</text>
+</svg>
